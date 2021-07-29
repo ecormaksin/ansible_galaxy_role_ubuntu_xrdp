@@ -1,2 +1,18 @@
 ---
 # tasks file for ansible_galaxy_role_ubuntu_xrdp
+
+- name: "Install xrdp | install packages"
+  become: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+  apt:
+    pkg:
+      - xrdp
+    update_cache: yes
+
+- name: "Install xrdp | start service"
+  become: yes
+  ignore_errors: "{{ ansible_check_mode }}"
+  systemd:
+    name: xrdp
+    enabled: yes
+    state: started
